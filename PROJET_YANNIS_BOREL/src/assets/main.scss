@@ -1,0 +1,8 @@
+@use './foundations/_functions.scss';
+@use './foundations/_variables.scss';
+@use './foundations/_mixins.scss';
+@use './foundations/_normalize.scss';
+
+img {
+    max-width: 100%;
+}
