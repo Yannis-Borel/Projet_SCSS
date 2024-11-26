@@ -2,24 +2,28 @@ name: Test Eslint
 
 on:
   pull_request:
-  types:
-  - opened
-  - synchronize
+    types:
+      - opened
+      - synchronize
 
-  jobs:
-    eslint:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout sur le dépot Github
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-        - name: setup Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: 20
+      # Configurer Node.js pour éxecuter la GitHub Action
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
-        - name: Install dependencies
-          run: npm install
+      # Installer les dépendances NPM
+      - name: Install dependencies
+        run: npm install
 
-        - name: Eslint check
-          run: npm run lint
+      # Lancer le check Eslint
+      - name: Eslint Check
+        run: npm run lint
