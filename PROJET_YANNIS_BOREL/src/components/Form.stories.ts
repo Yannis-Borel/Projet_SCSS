@@ -1,32 +1,34 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import Form from './Form.vue';
+import RegisterForm from './RegisterForm.vue';
 
-const meta: Meta<typeof Form> = {
-  title: 'Components/Form',
-  component: Form,
+const meta: Meta<typeof RegisterForm> = {
+  title: 'Components/RegisterForm',
+  component: RegisterForm,
   argTypes: {
-    email: { control: 'text', description: 'Adresse email de l\'utilisateur' },
-    password: { control: 'text', description: 'Mot de passe de l\'utilisateur' },
-    onSubmit: { action: 'submit', description: 'Événement déclenché lors de la soumission' },
+    username: { control: 'text', description: 'Nom d\'utilisateur' },
+    email: { control: 'text', description: 'Adresse email' },
+    password: { control: 'text', description: 'Mot de passe' },
+    onSubmit: { action: 'submit', description: 'Événement de soumission' },
   },
 };
 export default meta;
 
-type Story = StoryObj<typeof Form>;
+type Story = StoryObj<typeof RegisterForm>;
 
 const storyOptions: Omit<Story, 'args'> = {
   render: (args) => ({
-    components: { Form },
+    components: { RegisterForm },
     setup() {
       return { args };
     },
-    template: `<Form v-bind="args" @submit="args.onSubmit" />`,
+    template: `<RegisterForm v-bind="args" @submit="args.onSubmit" />`,
   }),
 };
 
 export const Default: Story = {
   ...storyOptions,
   args: {
+    username: '',
     email: '',
     password: '',
   },
@@ -35,7 +37,8 @@ export const Default: Story = {
 export const Prefilled: Story = {
   ...storyOptions,
   args: {
-    email: 'example@mail.com',
-    password: '123456',
+    username: 'TestUser',
+    email: 'testuser@example.com',
+    password: 'password123',
   },
 };
