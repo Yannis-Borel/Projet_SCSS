@@ -9,7 +9,7 @@ import RegisterForm from '@/components/RegisterForm.vue';
     <div class="home__logo-container">
       <img src="@/assets/image/logo.png" alt="Logo" class="home__logo" />
     </div>
-  
+  <!-- dedpozkdozkpodzkopzkdpzd -->
     <Form>fefefefeffefefefe</Form>
     <RegisterForm />
   </div>
