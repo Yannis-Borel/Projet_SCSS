@@ -44,17 +44,16 @@ alert(email.value + " " + password.value);
   
 
 <style lang="scss">
-// Bloc pour le formulaire
+
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; // Espacement entre les groupes du formulaire
-  max-width: 400px;
+  gap: 1.5rem; 
   margin: 0 auto;
   padding: 2rem;
-  background-color: #f9f9f9; // Couleur de fond
+  background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
 
   &__group {
     display: flex;
@@ -70,7 +69,7 @@ alert(email.value + " " + password.value);
 
   &__input {
     padding: 0.75rem;
-    font-size: 1rem;
+    font-size: 2rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     transition: border-color 0.3s ease;
@@ -86,13 +85,13 @@ alert(email.value + " " + password.value);
     align-self: center;
   }
 
-  // Responsive styles
+ 
   @media (max-width: 768px) {
-    max-width: 100%; // Prend toute la largeur de l'écran sur tablettes
+    max-width: 100%; 
     padding: 1.5rem;
 
     &__input {
-      font-size: 0.9rem; // Réduction de la taille de la police sur petits écrans
+      font-size: 0.9rem; 
       padding: 0.5rem;
     }
 
@@ -102,11 +101,11 @@ alert(email.value + " " + password.value);
   }
 
   @media (max-width: 480px) {
-    padding: 1rem; // Réduction des marges
+    padding: 1rem; 
     gap: 1rem;
 
     &__button {
-      width: 100%; // Le bouton prend toute la largeur sur petits écrans
+      width: 100%; 
     }
   }
 }
