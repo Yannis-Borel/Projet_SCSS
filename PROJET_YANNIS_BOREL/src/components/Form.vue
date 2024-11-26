@@ -9,7 +9,7 @@ const password = defineModel('password')
 function handleSubmit()  {
 alert(email.value + " " + password.value);
 
-    
+   
 }
 </script>
 
