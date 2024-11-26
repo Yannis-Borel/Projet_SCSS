@@ -17,10 +17,7 @@ on:
           uses: actions/setup-node@v3
           with:
             node-version: 20
-
-        - name: go to redirectory
-          run: cd PROJET_YANNIS_BOREL
-
+            
         - name: Install dependencies
           run: npm install
 
