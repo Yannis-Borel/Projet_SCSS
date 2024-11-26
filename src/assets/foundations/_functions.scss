@@ -7,3 +7,4 @@
 @function col-width($col, $totalCol: 12) {
   @return maths.div($col , $totalCol) * 100%;
 }
+
