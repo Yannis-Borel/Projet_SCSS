@@ -13,13 +13,13 @@ on:
         - name: Checkout code
           uses: actions/checkout@v3
 
-          - name: setup Node.js
-            uses: actions/setup-node@v3
-            with:
-              node-version: 20
+        - name: setup Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: 20
 
-          - name: Install dependencies
-            run: npm install
+        - name: Install dependencies
+          run: npm install
 
-          - name: Eslint check
-            run: npm run lint
+        - name: Eslint check
+          run: npm run lint
