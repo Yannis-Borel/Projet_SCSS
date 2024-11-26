@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import Form from '@/components/Form.vue';
+import RegisterForm from '@/components/RegisterForm.vue';
 </script>
 
 <template>
@@ -8,7 +9,9 @@ import Form from '@/components/Form.vue';
     <div class="home__logo-container">
       <img src="@/assets/image/logo.png" alt="Logo" class="home__logo" />
     </div>
+  
     <Form>fefefefeffefefefe</Form>
+    <RegisterForm />
   </div>
 </template>
 
