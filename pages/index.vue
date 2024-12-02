@@ -6,6 +6,8 @@
 
     <div>
         page d'accueil
+
+        <MyButton> Tounsi </MyButton>
     </div>
 </template>
 
