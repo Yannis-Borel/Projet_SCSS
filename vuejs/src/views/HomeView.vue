@@ -33,7 +33,7 @@ import RegisterForm from '@/components/RegisterForm.vue';
 <style lang="scss">
 .home {
   min-height: 100vh;
-  background: linear-gradient(135deg, $primaryColor, $primaryDarkColor);
+  background: linear-gradient(180deg, $primaryColor, $primaryDarkColor);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -41,8 +41,8 @@ import RegisterForm from '@/components/RegisterForm.vue';
   justify-content: center;
 
   &__Compte {
-    width: 50rem;
-    margin-bottom: 50px;
+    width: 40rem;
+    margin-bottom: 10px;
   }
 
   &__logo-container {
@@ -66,8 +66,8 @@ import RegisterForm from '@/components/RegisterForm.vue';
   }
 
   &__form {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
+    background: rgba(255, 255, 255, 0.7);
+   
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
