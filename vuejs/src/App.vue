@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {  RouterView } from 'vue-router'
-import Header from './components/Header.vue';
+// import Header from './components/Header.vue';
 </script>
 
 <template>
@@ -8,5 +8,5 @@ import Header from './components/Header.vue';
     <Suspense>
       <RouterView/>
     </Suspense>
-  <Footer />
+  <!-- <Footer /> -->
 </template>

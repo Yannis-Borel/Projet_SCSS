@@ -17,41 +17,41 @@ function handleSubmit() {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="form">
+  <form class="form" @submit.prevent="handleSubmit">
     <!-- Champ Email -->
     <div class="form__group">
       <label for="email" class="form__label">Email</label>
       <input 
+        v-model="email" 
         type="email" 
         name="email" 
-        v-model="email" 
         class="form__input" 
         required
-      />
+      >
     </div>
 
     <!-- Champ Mot de passe -->
     <div class="form__group">
       <label for="password" class="form__label">Password</label>
       <input 
+        v-model="password" 
         type="password" 
         name="password" 
-        v-model="password" 
         class="form__input" 
         required
-      />
+      >
     </div>
 
     <!-- Champ Confirmation du mot de passe -->
     <div class="form__group">
       <label for="confirmPassword" class="form__label">Confirm Password</label>
       <input 
+        v-model="confirmPassword" 
         type="password" 
         name="confirmPassword" 
-        v-model="confirmPassword" 
         class="form__input" 
         required
-      />
+      >
     </div>
 
     <!-- Bouton d'inscription -->

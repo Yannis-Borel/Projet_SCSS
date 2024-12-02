@@ -8,7 +8,7 @@ import RegisterForm from '@/components/RegisterForm.vue';
     <!-- Conteneur du logo -->
     
    
-    <img src="@/assets/image/Compte.png" alt="Logo" class="home__Compte" />
+    <img src="@/assets/image/Compte.png" alt="Logo" class="home__Compte" >
     <!-- Conteneur des formulaires -->
     <div class="home__forms">
       <!-- Formulaire d'inscription à gauche -->
@@ -25,7 +25,7 @@ import RegisterForm from '@/components/RegisterForm.vue';
       
     </div>
     <div class="home__logo-container">
-      <img src="@/assets/image/logo.png" alt="Logo" class="home__logo" />
+      <img src="@/assets/image/logo.png" alt="Logo" class="home__logo" >
     </div>
   </div>
 </template>
