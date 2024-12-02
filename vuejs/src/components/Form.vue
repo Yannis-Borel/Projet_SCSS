@@ -14,25 +14,25 @@ alert(email.value + " " + password.value);
 </script>
 
 <template>
-    <form @submit.prevent="handleSubmit" class="form">
+    <form class="form" @submit.prevent="handleSubmit">
       <div class="form__group">
         <label for="email" class="form__label">Email</label>
         <input 
+          v-model="email" 
           type="email" 
           name="email" 
-          v-model="email" 
           class="form__input" 
-        />
+        >
         {{ email }}
       </div>
       <div class="form__group">
         <label for="password" class="form__label">Password</label>
         <input 
+          v-model="password" 
           type="password" 
           name="password" 
-          v-model="password" 
           class="form__input" 
-        />
+        >
         {{ password }}
       </div>
       <div class="form__button">

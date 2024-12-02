@@ -20,13 +20,13 @@ const closeMobileMenu = () => {
         <div class="header__container">
           <!-- Logo -->
           <RouterLink to="/" class="header__logo">
-            <img src="../assets/img/SM-logo.png" alt="logo du site" />
+            <img src="../assets/img/SM-logo.png" alt="logo du site" >
           </RouterLink>
   
           <!-- Bouton mobile -->
           <button 
-            @click="toggleMobileMenu" 
-            class="header__mobile-button"
+            class="header__mobile-button" 
+            @click="toggleMobileMenu"
           >
             <svg v-if="!isOpen" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M3 9h14a1 1 0 110 2H3a1 1 0 110-2zm0-4h14a1 1 0 110 2H3a1 1 0 110-2zm0 8h14a1 1 0 110 2H3a1 1 0 110-2z" clip-rule="evenodd" />
