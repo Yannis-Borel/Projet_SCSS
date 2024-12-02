@@ -26,5 +26,5 @@ jobs:
 
       # Lancer le check Eslint
       - name: Tyope
-        run: npx nuxi typeckeck
+        run: npx nuxi typecheck
 
