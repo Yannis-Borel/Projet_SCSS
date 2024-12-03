@@ -2,13 +2,19 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxt/eslint'],
+  modules: ['@nuxt/eslint', '@nuxtjs/sanity'],
 
   css: ['@/assets/main.scss'],
 
 components:  [
     { path: '~/components', pathPrefix: false },
 ],
+
+// 👇 Add these lines
+sanity: {
+  projectId: "x444gzag",
+  dataset: "production",
+},
 
   vite: {
     css: {
