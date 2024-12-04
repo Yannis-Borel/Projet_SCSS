@@ -4,7 +4,7 @@
    
    <NuxtLayout>
    <NuxtPage/>
-   app.vue
+
    </NuxtLayout>
    
   </div>

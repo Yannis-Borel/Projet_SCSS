@@ -8,7 +8,7 @@ const POST_QUERY = groq`
     title,
     image,
     body,
-    "category": category->title 
+    "categories": categories[]->title
   }`
 ;
 
@@ -29,9 +29,9 @@ if (!post.value) {
       <h1>{{ post.title }}</h1>
 
       <!-- Afficher la catégorie -->
-      <p class="p-blog-category">Category: {{ post.category }}</p>
-<div v v-for="(category, index) in post.categories" :key="index ">
-  <p class="p-blog-category">Category titre: {{ category.title }}</p>
+      <p class="p-blog-category">Category: {{ post.categories }}</p>
+<div v v-for="(categories, index) in post.categories" :key="index ">
+  <p class="p-blog-category">Category titre: {{ categories.title }}</p>
 </div>
       <div class="p-blog-slug_image">
         <SanityImage :asset-id="post.image.asset._ref" />
