@@ -85,7 +85,7 @@ return parfum.name.includes(filterValue.value ?? "")
         <h2>Nos parfums</h2>
  <div class="c-parfums__input">
 
-    <input type="text" placeholder="Rechercher un parfum" v-model="filterValue" />
+    <input v-model="filterValue" type="text" placeholder="Rechercher un parfum" >
  </div>
       <div class="c-parfums__list">
 

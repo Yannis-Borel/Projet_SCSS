@@ -82,6 +82,7 @@ const toggleMobileMenu = () => {
   position: fixed;
   top: 0;
   z-index: 50;
+  position: relative;
 
   &__nav {
     background: linear-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
