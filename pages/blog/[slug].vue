@@ -4,7 +4,7 @@ import type { SanityDocument } from "@sanity/client";
 
 
 
-// Inclure la catégorie dans la requête
+// Inclure la catégorie dans la requêtesdd
 const POST_QUERY = groq`
   *[_type == "post" && slug.current == $slug][0]{
     title,
