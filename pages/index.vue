@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SanityDocument } from "@sanity/client";
 
-// Requête Sanity avec gestion des erreurs
+// Requête Sanity avec gestion des erreursd
 const { data: homepage } = await useSanityQuery<SanityDocument>(
    groq`*[_type == "homepage"][0]`,
 );

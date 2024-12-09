@@ -19,7 +19,7 @@ defineProps<{
     <!-- Section vidéo -->
     <div v-if="videoUrl" class="c-hero__video">
       <video controls autoplay muted loop>
-        <source :src="videoUrl" type="video/mp4" />
+        <source :src="videoUrl" type="video/mp4" >
         Your browser does not support the video tag.
       </video>
     </div>
