@@ -3,6 +3,13 @@ import type { SanityDocument } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
+useSeoMeta({
+    title: 'Blog | trackingAPP',
+    description: 'Retrouvez nos notes de mise à jour et os dernières nouvelles concernant notre tracking app !',
+    ogTitle: 'Blog | trackingAPP',
+    ogDescription: 'Description en fonction de la page',
+    ogImage: '/Photo_didentite.jpg',
+});
 
 const filter = ref('')
 const page = ref(1)
@@ -54,18 +61,16 @@ function onCategoriesClick(categories: SanityDocument) {
     }
 }
 
-const { projectId, dataset } = useSanity().client.config();
-
-
-
 function onPageClick(index: number) {
   page.value = index
 }
 
+const { projectId, dataset } = useSanity().client.config();
 const urlFor = (source: SanityImageSource) =>
   projectId && dataset
     ? imageUrlBuilder({ projectId, dataset }).image(source)
     : null;
+    
 </script>
 
 

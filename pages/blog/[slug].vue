@@ -2,7 +2,9 @@
 
 import type { SanityDocument } from "@sanity/client";
 
-// Inclure la catégorie dans la requête
+
+
+// Inclure la catégorie dans la requêtesdd
 const POST_QUERY = groq`
   *[_type == "post" && slug.current == $slug][0]{
     title,
@@ -15,11 +17,19 @@ const POST_QUERY = groq`
 const route = useRoute();
 
 const { data: post } = await useSanityQuery<SanityDocument>(POST_QUERY, { slug: route.params.slug });
+const { urlFor } = useSanityImage();
 
 // Renvoyer une page d'erreur si le post n'existe pas
 if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: "Page not found" });
 }
+
+
+useSeoMeta({
+    title: `${post.value.title} | trackingAPP`,
+    ogTitle: post.value.title,
+    ogImage: post.value.image && urlFor(post.value.image) ? urlFor(post.value.image)?.url() : '/Photo_didentite.jpg', 
+});
 
 </script>
 
