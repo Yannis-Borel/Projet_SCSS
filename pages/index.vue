@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import type { SanityDocument } from "@sanity/client";
 
 // Requête Sanity avec gestion des erreurs
