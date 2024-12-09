@@ -40,7 +40,7 @@ useSeoMeta({
 
       <!-- Afficher la catégorie -->
       <p class="p-blog-category">Category: {{ post.categories }}</p>
-<div v v-for="(categories, index) in post.categories" :key="index ">
+<div v-for="(categories, index) in post.categories" :key="index " v>
   <p class="p-blog-category">Category titre: {{ categories.title }}</p>
 </div>
       <div class="p-blog-slug_image">

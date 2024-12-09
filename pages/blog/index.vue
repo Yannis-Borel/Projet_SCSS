@@ -84,8 +84,8 @@ const urlFor = (source: SanityImageSource) =>
           <div 
             v-for="(category, index) in categories" 
             :key="index" 
-            @click="onCategoriesClick(category)" 
-            class="p-blog__category"
+            class="p-blog__category" 
+            @click="onCategoriesClick(category)"
           >
             {{ category.title }}
           </div>
@@ -95,9 +95,9 @@ const urlFor = (source: SanityImageSource) =>
         <div class="p-blog__content">
           <div class="p-blog__cards">
             <div 
-              class="p-blog__card" 
               v-for="(post, index) in posts" 
-              :key="index"
+              :key="index" 
+              class="p-blog__card"
             >
               <NuxtLink :to="`/blog/${post.slug.current}`" class="p-blog__card-link">
                 <img
@@ -105,7 +105,7 @@ const urlFor = (source: SanityImageSource) =>
                   class="p-blog__card-image"
                   :src="urlFor(post.image)?.url()"
                   :alt="post.title"
-                />
+                >
                 <div class="p-blog__card-info">
                   <h3 class="p-blog__card-title">{{ post.title }}</h3>
                   <div class="p-blog__card-tags">
