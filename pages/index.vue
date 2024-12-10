@@ -14,7 +14,7 @@ const { data: homepage } = await useSanityQuery<SanityDocument>(
     <div v-if="homepage" class="p-homepage">
     <BeginHome v-bind="homepage.hero" />
   </div>
-   
+   <div> dzldz </div>
 </template>
 
 

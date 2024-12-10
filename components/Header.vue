@@ -1,71 +1,138 @@
 <script setup lang="ts">
-// import { ref } from "vue";
-// import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import { RouterLink } from "vue-router";
 
+// État d'ouverture du menu mobile
 const isOpen = ref(false);
 
+// Fonction pour ouvrir/fermer le menu mobile
 const toggleMobileMenu = () => {
   isOpen.value = !isOpen.value;
+  document.body.classList.toggle("no-scroll", isOpen.value);
+};
+
+// Fonction pour fermer le menu mobile
+const closeMobileMenu = () => {
+  isOpen.value = false;
+  document.body.classList.remove("no-scroll");
 };
 </script>
 
 <template>
   <header class="header">
-    <nav class="header__nav">
-      <div class="header__container">
-        <!-- Logo -->
-        <RouterLink to="/" class="header__logo">
-          <img src="../assets/img/SM-logo.png" alt="logo du site" >
-        </RouterLink>
+    <nav class="header__nav nav">
+      <div class="nav__container">
+        <div class="nav__content">
+          <!-- Logo -->
+          <RouterLink to="/" class="nav__logo">
+            <WEBTVLogo class="nav__logo-img" alt="logo du site" />
+          </RouterLink>
 
-        <!-- Bouton mobile -->
-        <button 
-          class="header__mobile-button" 
-          @click="toggleMobileMenu"
-        >
-          <svg v-if="!isOpen" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M3 9h14a1 1 0 110 2H3a1 1 0 110-2zm0-4h14a1 1 0 110 2H3a1 1 0 110-2zm0 8h14a1 1 0 110 2H3a1 1 0 110-2z" clip-rule="evenodd" />
-          </svg>
-          <svg v-else viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M6 6a.75.75 0 011.06 0L10 8.94l2.47-2.47a.75.75 0 111.06 1.06L11.06 10l2.47 2.47a.75.75 0 11-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 01-1.06-1.06L8.94 10 6.47 7.53A.75.75 0 016 6z" clip-rule="evenodd" />
-          </svg>
-        </button>
+          <!-- Liens pour grands écrans -->
+          <div class="nav__desktop-menu">
+            <RouterLink to="/emissions" class="nav__desktop-link">
+              Habitudes
+            </RouterLink>
+            <RouterLink to="/reportages" class="nav__desktop-link">
+              Inscription
+            </RouterLink>
+            <RouterLink to="/apropos" class="nav__desktop-link">
+              À propos
+            </RouterLink>
+          </div>
 
-        <!-- Menu desktop -->
-        <div class="header__menu header__menu--desktop">
-          <ul>
-            <li class="header__menu--desktop-item">
-              <NuxtLink to="/" class="header__menu--desktop-item__link">Accueil</NuxtLink>
-            </li>
-            <li class="header__menu--desktop-item">
-              <NuxtLink to="/blog" class="header__menu--desktop-item__link">Blog</NuxtLink>
-            </li>
-            <li class="header__menu--desktop-item">
-              <NuxtLink to="/carouseltest" class="header__menu--desktop-item__link">Carousel Test</NuxtLink>
-            </li>
-            <li class="header__menu--desktop-item">
-              <NuxtLink to="/pocketbasetest" class="header__menu--desktop-item__link">Pocketbase Test</NuxtLink>
-            </li>
-          </ul>
-        </div> 
+          <!-- Bouton menu mobile -->
+          <button
+            @click="toggleMobileMenu"
+            class="nav__mobile-toggle"
+          >
+            <!-- Icône menu -->
+            <svg v-if="!isOpen" class="nav__mobile-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M3 9h14a1 1 0 110 2H3a1 1 0 110-2zm0-4h14a1 1 0 110 2H3a1 1 0 110-2zm0 8h14a1 1 0 110 2H3a1 1 0 110-2z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <!-- Icône croix -->
+            <svg v-else class="nav__mobile-icon" viewBox="0 0 20 20" fill="white">
+              <path
+                fill-rule="evenodd"
+                d="M6 6a.75.75 0 011.06 0L10 8.94l2.47-2.47a.75.75 0 111.06 1.06L11.06 10l2.47 2.47a.75.75 0 11-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 01-1.06-1.06L8.94 10 6.47 7.53A.75.75 0 016 6z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
 
         <!-- Menu mobile -->
-        <div 
-          :class="{ hidden: !isOpen }" 
-          class="header__menu header__menu--mobile"
+        <div
+          class="nav__mobile-menu"
+          :class="{ 'nav__mobile-menu--hidden': !isOpen }"
         >
-          <ul>
-            <li class="header__menu--mobile-item">
-              <NuxtLink to="/" class="header__menu--mobile-item__link">Accueil</NuxtLink>
+          <div class="nav__mobile-header">
+            <!-- Logo -->
+            <RouterLink to="/" class="nav__mobile-logo">
+              <img src="../img/WEBTV.png" class="nav__mobile-logo-img" alt="logo du site" />
+            </RouterLink>
+            <!-- Bouton fermeture -->
+            <button @click="closeMobileMenu" class="nav__mobile-close">
+              <svg viewBox="0 0 20 20" fill="white" class="nav__mobile-close-icon">
+                <path
+                  fill-rule="evenodd"
+                  d="M6 6a.75.75 0 011.06 0L10 8.94l2.47-2.47a.75.75 0 111.06 1.06L11.06 10l2.47 2.47a.75.75 0 11-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 01-1.06-1.06L8.94 10 6.47 7.53A.75.75 0 016 6z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Liens menu mobile -->
+          <ul class="nav__mobile-links">
+            <li class="nav__mobile-item">
+              <RouterLink
+                @click="closeMobileMenu"
+                to="/emissions"
+                class="nav__mobile-link"
+              >
+                Emissions
+              </RouterLink>
             </li>
-            <li class="header__menu--mobile-item">
-              <NuxtLink to="/carouselAPI" class="header__menu--mobile-item__link">Playlists</NuxtLink>
+            <li class="nav__mobile-item">
+              <RouterLink
+                @click="closeMobileMenu"
+                to="/reportages"
+                class="nav__mobile-link"
+              >
+                Reportages
+              </RouterLink>
             </li>
-            <li class="header__menu--mobile-item">
-              <NuxtLink to="/carouseltest" class="header__menu--mobile-item__link">Carousel Test</NuxtLink>
+            <li class="nav__mobile-item">
+              <RouterLink
+                @click="closeMobileMenu"
+                to="/rediffusions"
+                class="nav__mobile-link"
+              >
+                Rediffusions
+              </RouterLink>
             </li>
-            <li class="header__menu--mobile-item">
-              <NuxtLink to="/pocketbasetest" class="header__menu--mobile-item__link">Pocketbase Test</NuxtLink>
+            <li class="nav__mobile-item">
+              <RouterLink
+                @click="closeMobileMenu"
+                to="/apropos"
+                class="nav__mobile-link"
+              >
+                À propos
+              </RouterLink>
+            </li>
+            <li class="nav__mobile-item">
+              <RouterLink
+                @click="closeMobileMenu"
+                to="/newsroom"
+                class="nav__mobile-link"
+              >
+                Newsroom
+              </RouterLink>
             </li>
           </ul>
         </div>
@@ -74,105 +141,186 @@ const toggleMobileMenu = () => {
   </header>
 </template>
 
+<style lang="scss" scoped>
+// Variables globales
+$color-black: rgb(0, 0, 0);
+$color-white: white;
+$color-gray-200: #e5e7eb;
+$color-gray-300: #d1d5db;
+$color-gray-900: #111827;
+$z-index-header: 50;
 
-<style lang="scss">
-// Fichier SCSS (header.scss)
+// Mixins pour la réactivité
+@mixin desktop {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+// Styles globaux
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
 .header {
   width: 100%;
   position: fixed;
   top: 0;
-  z-index: 50;
-  position: relative;
+  z-index: $z-index-header;
 
   &__nav {
-    background: linear-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+    position: relative;
+    background: linear-gradient($color-black 0%, rgba($color-black, 0) 100%);
+  }
+}
+
+.nav {
+  &__container {
+    height: 100%;
+    padding: 1.25rem;
+    
+    @include desktop {
+      padding: 1.25rem 2rem;
+    }
   }
 
-  &__container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 1rem;
+  &__content {
     display: flex;
-    justify-content: space-between;
     align-items: center;
   }
 
   &__logo {
-    display: flex;
-    align-items: center;
+    flex-shrink: 0;
 
-    img {
-      height: 3rem; // Correspond à h-12
+    &-img {
+      height: 3rem;
     }
   }
 
-  &__mobile-button {
-    display: block;
-    background: none;
-    color: $white;
-    border: none;
-    cursor: pointer;
+  &__desktop-menu {
+    display: none;
+    padding: 0 5rem;
+    
+    @include desktop {
+      display: flex;
+      gap: 2.25rem;
+    }
+  }
+
+  &__desktop-link {
+    color: $color-gray-300;
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
 
     &:hover {
-      color: $gray400; // Hover effect
+      color: $color-white;
+    }
+  }
+
+  &__mobile-toggle {
+    display: block;
+    color: $color-white;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    
+    @include desktop {
+      display: none;
+    }
+
+    &:hover {
+      color: $color-gray-300;
     }
 
     &:focus {
       outline: none;
-      color: $gray400;
-    }
-
-    svg {
-      width: 1.5rem; // Correspond à w-6
-      height: 1.5rem;
     }
   }
 
-  &__menu {
-    display: none;
+  &__mobile-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 
-    &--desktop {
-      @include medium-up() {
-        display: flex;
-        gap: 1rem; // Espace entre les éléments (space-x-4)
-      }
+  &__mobile-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(
+      to bottom, 
+      $color-black, 
+      $color-black, 
+      $color-gray-900
+    );
+    color: $color-white;
+    padding: 1.5rem;
+    transition: opacity 0.4s;
 
-      &-item {
-        &__link {
-          display: block;
-          padding: 0.5rem 1rem; // Correspond à py-2 pr-4 pl-3
-          color: $gray400;
-          text-decoration: none;
-          border-bottom: 1px solid transparent;
-
-          &:hover {
-            color: $white;
-          }
-        }
-      }
+    @include desktop {
+      display: none;
     }
 
-    &--mobile {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem; // Correspond à space-y-4
-      padding: 1rem 0.5rem; // Correspond à px-2 pt-2 pb-3
+    &--hidden {
+      display: none;
+    }
+  }
 
-      &-item {
-        &__link {
-          display: block;
-          padding: 0.75rem 1rem; // Correspond à py-3 pr-4 pl-3
-          color: $gray200;
-          background-color: $primaryColor;
-          border-radius: 0.25rem;
+  &__mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
 
-          &:hover {
-            background-color: darken($primaryColor, 10%);
-          }
-        }
-      }
+  &__mobile-logo {
+    flex-shrink: 0;
+
+    &-img {
+      height: 3rem;
+    }
+  }
+
+  &__mobile-close {
+    color: $color-white;
+  }
+
+  &__mobile-close-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &__mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  &__mobile-item {
+    width: 100%;
+  }
+
+  &__mobile-link {
+    display: block;
+    padding: 0.75rem;
+    color: $color-gray-200;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+
+    &:hover {
+      background-color: rgba(55, 65, 81, 0.7);
     }
   }
 }
-
 </style>
