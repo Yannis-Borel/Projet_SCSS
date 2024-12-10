@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 defineProps<{
   title: string,
   text: string,  
@@ -10,15 +9,16 @@ defineProps<{
 
 <template>
   <section class="c-hero">
+    
     <!-- Titre principal -->
-    <h1 class="hero__title">{{ title }}</h1>
+    <h1 class="c-hero__title">{{ title }}</h1>
     
     <!-- Texte de description -->
-    <p class="hero__text">{{ text }}</p>
+    <p class="c-hero__text">{{ text }}</p>
     
     <!-- Section vidéo -->
     <div v-if="videoUrl" class="c-hero__video">
-      <video controls autoplay muted loop>
+      <video autoplay muted loop>
         <source :src="videoUrl" type="video/mp4" >
         Your browser does not support the video tag.
       </video>
@@ -38,19 +38,19 @@ defineProps<{
 </template>
 
 <style lang="scss">
-
-
 .c-hero {
   position: relative;
-  width: 100%;
-  height: 100vh; // La section occupe tout l'écran
+  height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start; // Texte aligné à gauche
+  padding-left: 5%; // Espacement du texte par rapport au bord gauche
   color: #fff;
+  background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  background-size: 75% 100%; // Limite la largeur du dégradé à 50%
+  background-repeat: no-repeat; // Empêche la répétition du dégradé
 
   // Vidéo en fond
   &__video {
@@ -59,38 +59,36 @@ defineProps<{
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; // Place la vidéo derrière tout
-    overflow: hidden;
+    z-index: -1;
 
     video {
       width: 100%;
       height: 100%;
-      object-fit: cover; // S'assure que la vidéo remplit tout l'écran
-      pointer-events: none; // Empêche toute interaction avec la vidéo
+      object-fit: cover;
     }
   }
 
   // Titre
   &__title {
-    font-size: 3rem;
+    font-size: 5rem; // Plus gros titre
     font-weight: bold;
     margin: 0;
     z-index: 2;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
     @media (max-width: 768px) {
-      font-size: 2.5rem;
+      font-size: 3rem;
     }
   }
 
   // Texte de description
   &__text {
-    font-size: 1.2rem;
+    font-size: 1.5rem; // Texte agrandi
     margin-top: 10px;
     margin-bottom: 30px;
     z-index: 2;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
     @media (max-width: 768px) {
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
   }
 
@@ -99,11 +97,12 @@ defineProps<{
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start; // Statistiques alignées à gauche
+    padding-left: 5%;
     z-index: 2;
 
     &__stat {
-      background: rgba(255, 255, 255, 0.2); // Semi-transparence pour harmoniser avec la vidéo
+      background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 10px;
       padding: 20px;
@@ -124,7 +123,7 @@ defineProps<{
 
         &:first-child {
           font-size: 2rem;
-          color: #ffd700; // Une couleur dorée pour les valeurs
+          color: #ffd700;
         }
       }
 
@@ -135,5 +134,4 @@ defineProps<{
     }
   }
 }
-
 </style>

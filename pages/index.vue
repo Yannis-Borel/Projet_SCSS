@@ -1,22 +1,20 @@
 <script setup lang="ts">
 import type { SanityDocument } from "@sanity/client";
 
-// Requête Sanity avec gestion des erreursd
+// Requête Sanity avec gestion des erreurs
 const { data: homepage } = await useSanityQuery<SanityDocument>(
    groq`*[_type == "homepage"][0]`,
 );
-
-
-
 </script>
 
 <template>
+  <div>
     <div v-if="homepage" class="p-homepage">
-    <BeginHome v-bind="homepage.hero" />
+      <BeginHome v-bind="homepage.hero" />
+    </div>
+    <div>dzldz</div>
   </div>
-   
 </template>
-
 
 <style lang="scss">
 .p-home {
@@ -112,5 +110,4 @@ const { data: homepage } = await useSanityQuery<SanityDocument>(
     }
   }
 }
-
 </style>
