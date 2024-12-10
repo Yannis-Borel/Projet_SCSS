@@ -1,205 +1,215 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
+import { useCookie } from '#app' // Assurez-vous d'utiliser le bon import si vous n'êtes pas sur Nuxt.
 
-// Réactif pour stocker les données du dashboard
-const data = ref({
+// Interfaces pour les types
+interface Habit {
+  id: number;
+  title: string;
+  description?: string;
+}
+
+interface DashboardData {
+  username: string;
+  globalHabits: Habit[];
+  personalHabits: Habit[];
+}
+
+// Données réactives pour le tableau de bord
+const data = ref<DashboardData>({
   username: '',
   globalHabits: [],
-  personalHabits: []
-})
+  personalHabits: [],
+});
 
 // État pour le formulaire de modification
-const editingHabit = ref(null)
+const editingHabit = ref<Habit | null>(null);
+
+// Données pour le formulaire d'ajout d'habitude
+const title = ref<string>('');
+const description = ref<string>('');
+const error = ref<string>('');
 
 // Fonction pour charger les données du dashboard
 const fetchDashboardData = async () => {
   try {
+    const jwt = useCookie('api_tracking_jwt')?.value;
+    if (!jwt) throw new Error('Token JWT manquant');
+
     const response = await fetch('http://localhost:4000/dashboard', {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${useCookie('api_tracking_jwt').value}`
-      }
-    })
-    
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+
     if (!response.ok) {
-      throw new Error('Erreur lors du chargement du dashboard')
+      throw new Error('Erreur lors du chargement du dashboard');
     }
-    
-    data.value = await response.json()
+
+    data.value = await response.json();
   } catch (error) {
-    console.error('Erreur:', error)
+    console.error('Erreur:', error);
   }
-}
+};
 
 // Fonction pour supprimer une habitude
-const deleteHabit = async (habitId) => {
+const deleteHabit = async (habitId: number) => {
   try {
+    const jwt = useCookie('api_tracking_jwt')?.value;
+    if (!jwt) throw new Error('Token JWT manquant');
+
     const response = await fetch(`http://localhost:4000/habits/${habitId}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${useCookie('api_tracking_jwt').value}`
-      }
-    })
-    
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+
     if (!response.ok) {
-      throw new Error('Erreur lors de la suppression de l\'habitude')
+      throw new Error('Erreur lors de la suppression de l\'habitude');
     }
-    
-    await fetchDashboardData()
+
+    await fetchDashboardData();
   } catch (error) {
-    console.error('Erreur:', error)
+    console.error('Erreur:', error);
   }
-}
+};
 
 // Fonction pour commencer la modification d'une habitude
-const startEditHabit = (habit) => {
-  editingHabit.value = { ...habit }
-}
+const startEditHabit = (habit: Habit) => {
+  editingHabit.value = { ...habit };
+};
 
 // Fonction pour mettre à jour une habitude
 const updateHabit = async () => {
+  if (!editingHabit.value) {
+    alert('Aucune habitude à mettre à jour.');
+    return;
+  }
+
   if (!editingHabit.value.title) {
-    alert('Le titre est requis')
-    return
+    alert('Le titre est requis');
+    return;
   }
 
   try {
+    const jwt = useCookie('api_tracking_jwt')?.value;
+    if (!jwt) throw new Error('Token JWT manquant');
+
     const response = await fetch(`http://localhost:4000/habits/${editingHabit.value.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${useCookie('api_tracking_jwt').value}`
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({
         title: editingHabit.value.title,
-        description: editingHabit.value.description
-      })
-    })
+        description: editingHabit.value.description,
+      }),
+    });
 
     if (!response.ok) {
-      throw new Error('Erreur lors de la mise à jour de l\'habitude')
+      throw new Error('Erreur lors de la mise à jour de l\'habitude');
     }
 
-    // Réinitialiser le mode édition
-    editingHabit.value = null
-
-    // Recharger les données
-    await fetchDashboardData()
+    editingHabit.value = null;
+    await fetchDashboardData();
   } catch (error) {
-    console.error('Erreur:', error)
-    alert(error.message)
+    console.error('Erreur:', error);
+    alert((error as Error).message);
   }
-}
+};
 
 // Fonction pour tracker une habitude
-const trackHabit = async (habitId, completed) => {
+const trackHabit = async (habitId: number, completed: boolean) => {
   try {
+    const jwt = useCookie('api_tracking_jwt')?.value;
+    if (!jwt) throw new Error('Token JWT manquant');
+
     const response = await fetch(`http://localhost:4000/tracking/${habitId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${useCookie('api_tracking_jwt').value}`
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({
         completed: completed,
-        date: new Date().toISOString().split('T')[0] // Date du jour au format YYYY-MM-DD
-      })
-    })
+        date: new Date().toISOString().split('T')[0],
+      }),
+    });
 
     if (!response.ok) {
-      throw new Error('Erreur lors du tracking de l\'habitude')
+      throw new Error('Erreur lors du tracking de l\'habitude');
     }
 
-    // Recharger les données pour mettre à jour les statistiques
-    await fetchDashboardData()
+    await fetchDashboardData();
   } catch (error) {
-    console.error('Erreur:', error)
-    alert(error.message)
+    console.error('Erreur:', error);
+    alert((error as Error).message);
   }
-}
+};
 
-// Formulaire d'ajout d'habitude
-const title = ref('')
-const description = ref('')
-const error = ref('')
-
+// Fonction pour ajouter une habitude
 const addHabit = async () => {
-  error.value = ''
+  error.value = '';
 
   if (!title.value) {
-    error.value = 'Le titre est requis'
-    return
+    error.value = 'Le titre est requis';
+    return;
   }
 
   try {
+    const jwt = useCookie('api_tracking_jwt')?.value;
+    if (!jwt) throw new Error('Token JWT manquant');
+
     const response = await fetch('http://localhost:4000/habits', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${useCookie('api_tracking_jwt').value}`
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({
         title: title.value,
-        description: description.value
-      })
-    })
+        description: description.value,
+      }),
+    });
 
     if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.message || 'Erreur lors de la création de l\'habitude')
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Erreur lors de la création de l\'habitude');
     }
 
-    // Réinitialiser le formulaire
-    title.value = ''
-    description.value = ''
-
-    // Recharger les données
-    await fetchDashboardData()
+    title.value = '';
+    description.value = '';
+    await fetchDashboardData();
   } catch (err) {
-    error.value = err.message
+    error.value = (err as Error).message;
   }
-}
+};
 
 // Charger les données au montage du composant
-onMounted(fetchDashboardData)
+onMounted(fetchDashboardData);
 </script>
 
 <template>
   <div class="dashboard-container">
     <h1>Mon dashboard</h1>
-    
+
     <!-- Formulaire d'ajout d'habitude -->
     <div class="habit-form-container">
       <h2>Ajouter une nouvelle habitude</h2>
-      
-      <form @submit.prevent="addHabit" class="habit-form">
+      <form class="habit-form" @submit.prevent="addHabit">
         <div class="form-group">
           <label for="title">Titre de l'habitude</label>
-          <input 
-            id="title"
-            v-model="title" 
-            type="text" 
-            placeholder="Ex: Lecture quotidienne"
-            required
-          />
+          <input id="title" v-model="title" type="text" placeholder="Ex: Lecture quotidienne" required >
         </div>
-        
         <div class="form-group">
           <label for="description">Description (optionnel)</label>
-          <textarea 
-            id="description"
-            v-model="description"
-            placeholder="Décrivez votre habitude en détail"
-          ></textarea>
+          <textarea id="description" v-model="description" placeholder="Décrivez votre habitude en détail"/>
         </div>
-        
-        <div v-if="error" class="error-message">
-          {{ error }}
-        </div>
-        
-        <button type="submit" class="submit-btn">
-          Ajouter l'habitude
-        </button>
+        <div v-if="error" class="error-message">{{ error }}</div>
+        <button type="submit" class="submit-btn">Ajouter l'habitude</button>
       </form>
     </div>
 
@@ -218,59 +228,25 @@ onMounted(fetchDashboardData)
     <div class="habits-section">
       <h2>Mes habitudes personnelles</h2>
       <ul v-if="data.personalHabits.length">
-        <li 
-          v-for="habit in data.personalHabits" 
-          :key="habit.id" 
-          class="personal-habit-item"
-        >
-          <!-- Mode édition -->
+        <li v-for="habit in data.personalHabits" :key="habit.id" class="personal-habit-item">
           <template v-if="editingHabit && editingHabit.id === habit.id">
             <div class="edit-form">
-              <input 
-                v-model="editingHabit.title" 
-                placeholder="Titre" 
-                required
-              />
-              <textarea 
-                v-model="editingHabit.description" 
-                placeholder="Description"
-              ></textarea>
+              <input v-model="editingHabit.title" placeholder="Titre" required >
+              <textarea v-model="editingHabit.description" placeholder="Description"/>
               <div class="edit-buttons">
-                <button @click="updateHabit" class="save-btn">Enregistrer</button>
-                <button @click="editingHabit = null" class="cancel-btn">Annuler</button>
+                <button class="save-btn" @click="updateHabit">Enregistrer</button>
+                <button class="cancel-btn" @click="editingHabit = null">Annuler</button>
               </div>
             </div>
           </template>
-          
-          <!-- Mode normal -->
           <template v-else>
             <div class="habit-details">
               <span>{{ habit.title }} : {{ habit.description }}</span>
               <div class="habit-actions">
-                <button 
-                  @click="trackHabit(habit.id, true)" 
-                  class="track-btn track-success"
-                >
-                  ✓ Terminé
-                </button>
-                <button 
-                  @click="trackHabit(habit.id, false)" 
-                  class="track-btn track-fail"
-                >
-                  ✗ Non fait
-                </button>
-                <button 
-                  @click="startEditHabit(habit)" 
-                  class="edit-btn"
-                >
-                  Modifier
-                </button>
-                <button 
-                  @click="deleteHabit(habit.id)" 
-                  class="delete-btn"
-                >
-                  Supprimer
-                </button>
+                <button class="track-btn track-success" @click="trackHabit(habit.id, true)">✓ Terminé</button>
+                <button class="track-btn track-fail" @click="trackHabit(habit.id, false)">✗ Non fait</button>
+                <button class="edit-btn" @click="startEditHabit(habit)">Modifier</button>
+                <button class="delete-btn" @click="deleteHabit(habit.id)">Supprimer</button>
               </div>
             </div>
           </template>
@@ -280,6 +256,7 @@ onMounted(fetchDashboardData)
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .dashboard-container {
@@ -413,4 +390,6 @@ input, textarea {
   border-radius: 4px;
   cursor: pointer;
 }
+
+
 </style>
