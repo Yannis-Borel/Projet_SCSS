@@ -73,7 +73,7 @@ const closeMobileMenu = () => {
           <div class="nav__mobile-header">
             <!-- Logo -->
             <RouterLink to="/" class="nav__mobile-logo">
-              <img src="../img/WEBTV.png" class="nav__mobile-logo-img" alt="logo du site" >
+              <img src="" class="nav__mobile-logo-img" alt="logo du site" >
             </RouterLink>
             <!-- Bouton fermeture -->
             <button class="nav__mobile-close" @click="closeMobileMenu">
