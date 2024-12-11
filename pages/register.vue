@@ -51,11 +51,11 @@ const onSubmit = async (event: Event) => {
       <form class="contact-form" @submit="onSubmit">
         <div>
           <label for="username">Username</label>
-          <input id="username" v-model="username" type="text" placeholder="Entrez votre username" required />
+          <input id="username" v-model="username" type="text" placeholder="Entrez votre username" required >
         </div>
         <div>
           <label for="password">Mot de passe</label>
-          <input id="password" v-model="password" type="password" placeholder="Entrez votre mot de passe" required />
+          <input id="password" v-model="password" type="password" placeholder="Entrez votre mot de passe" required >
         </div>
         <button type="submit" class="submit-button">Envoyer</button>
         <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>

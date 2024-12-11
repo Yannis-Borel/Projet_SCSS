@@ -16,6 +16,12 @@ sanity: {
   dataset: "production",
 },
 
+runtimeConfig: {
+  public: {
+    apiTrackingBaseUrl: ''
+  }
+},
+
   vite: {
     css: {
       preprocessorOptions: {
