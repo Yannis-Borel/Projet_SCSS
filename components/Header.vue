@@ -43,8 +43,8 @@ const closeMobileMenu = () => {
 
           <!-- Bouton menu mobile -->
           <button
-            @click="toggleMobileMenu"
             class="nav__mobile-toggle"
+            @click="toggleMobileMenu"
           >
             <!-- Icône menu -->
             <svg v-if="!isOpen" class="nav__mobile-icon" viewBox="0 0 20 20" fill="currentColor">
@@ -52,7 +52,7 @@ const closeMobileMenu = () => {
                 fill-rule="evenodd"
                 d="M3 9h14a1 1 0 110 2H3a1 1 0 110-2zm0-4h14a1 1 0 110 2H3a1 1 0 110-2zm0 8h14a1 1 0 110 2H3a1 1 0 110-2z"
                 clip-rule="evenodd"
-              ></path>
+              />
             </svg>
             <!-- Icône croix -->
             <svg v-else class="nav__mobile-icon" viewBox="0 0 20 20" fill="white">
@@ -60,7 +60,7 @@ const closeMobileMenu = () => {
                 fill-rule="evenodd"
                 d="M6 6a.75.75 0 011.06 0L10 8.94l2.47-2.47a.75.75 0 111.06 1.06L11.06 10l2.47 2.47a.75.75 0 11-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 01-1.06-1.06L8.94 10 6.47 7.53A.75.75 0 016 6z"
                 clip-rule="evenodd"
-              ></path>
+              />
             </svg>
           </button>
         </div>
@@ -73,16 +73,16 @@ const closeMobileMenu = () => {
           <div class="nav__mobile-header">
             <!-- Logo -->
             <RouterLink to="/" class="nav__mobile-logo">
-              <img src="../img/WEBTV.png" class="nav__mobile-logo-img" alt="logo du site" />
+              <img src="../img/WEBTV.png" class="nav__mobile-logo-img" alt="logo du site" >
             </RouterLink>
             <!-- Bouton fermeture -->
-            <button @click="closeMobileMenu" class="nav__mobile-close">
+            <button class="nav__mobile-close" @click="closeMobileMenu">
               <svg viewBox="0 0 20 20" fill="white" class="nav__mobile-close-icon">
                 <path
                   fill-rule="evenodd"
                   d="M6 6a.75.75 0 011.06 0L10 8.94l2.47-2.47a.75.75 0 111.06 1.06L11.06 10l2.47 2.47a.75.75 0 11-1.06 1.06L10 11.06l-2.47 2.47a.75.75 0 01-1.06-1.06L8.94 10 6.47 7.53A.75.75 0 016 6z"
                   clip-rule="evenodd"
-                ></path>
+                />
               </svg>
             </button>
           </div>
@@ -91,45 +91,45 @@ const closeMobileMenu = () => {
           <ul class="nav__mobile-links">
             <li class="nav__mobile-item">
               <RouterLink
-                @click="closeMobileMenu"
                 to="/emissions"
                 class="nav__mobile-link"
+                @click="closeMobileMenu"
               >
                 Emissions
               </RouterLink>
             </li>
             <li class="nav__mobile-item">
               <RouterLink
-                @click="closeMobileMenu"
                 to="/reportages"
                 class="nav__mobile-link"
+                @click="closeMobileMenu"
               >
                 Reportages
               </RouterLink>
             </li>
             <li class="nav__mobile-item">
               <RouterLink
-                @click="closeMobileMenu"
                 to="/rediffusions"
                 class="nav__mobile-link"
+                @click="closeMobileMenu"
               >
                 Rediffusions
               </RouterLink>
             </li>
             <li class="nav__mobile-item">
               <RouterLink
-                @click="closeMobileMenu"
                 to="/apropos"
                 class="nav__mobile-link"
+                @click="closeMobileMenu"
               >
                 À propos
               </RouterLink>
             </li>
             <li class="nav__mobile-item">
               <RouterLink
-                @click="closeMobileMenu"
                 to="/newsroom"
                 class="nav__mobile-link"
+                @click="closeMobileMenu"
               >
                 Newsroom
               </RouterLink>
