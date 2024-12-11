@@ -7,7 +7,7 @@ on:
       - synchronize
 
 jobs:
-  typescript:
+  build:
     runs-on: ubuntu-latest
 
     steps:
