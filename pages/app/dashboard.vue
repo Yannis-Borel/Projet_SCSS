@@ -1,44 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import useTrackingApi from '~/composables/useTrackingApi'
+import { ref, computed } from 'vue';
+import type { DashboardPayload } from '~/@types/dashboard';
+import useTrackingApi from '~/composables/useTrackingApi';
 
-// Interfaces
-interface Habit {
-  id: number
-  title: string
-  description?: string // Description est facultative
-}
 
-// Interface des données du tableau de bord
-interface DashboardData {
-  username: string
-  globalHabits: Habit[]
-  personalHabits: Habit[]
-}
 
 // Récupération des données avec useAsyncData
-const { data, refresh } = await useAsyncData('dashboard', async () => {
+const { data, refresh } = await useAsyncData<DashboardPayload>('dashboard', async () => {
   const response = await useTrackingApi('/dashboard', {
-    method: 'GET'
-  })
+    method: 'GET',
+  });
 
-  if (!response) throw new Error('Erreur lors du chargement du tableau de bord')
+  if (!response) throw new Error('Erreur lors du chargement du tableau de bord');
 
-  return response as DashboardData
-})
+  return response;
+});
 
 // État pour le formulaire d'ajout d'habitude
-const title = ref('')
-const description = ref<string>('') // Initialisation correcte
-const error = ref('')
+const title = ref('');
+const description = ref<string>(''); // Initialisation correcte
+const error = ref('');
 
 // Fonction pour ajouter une habitude
 const addHabit = async () => {
-  error.value = ''
+  error.value = '';
 
   if (!title.value) {
-    error.value = 'Le titre est requis'
-    return
+    error.value = 'Le titre est requis';
+    return;
   }
 
   try {
@@ -46,54 +35,54 @@ const addHabit = async () => {
       method: 'POST',
       body: {
         title: title.value,
-        description: description.value 
-      }
-    })
+        description: description.value,
+      },
+    });
 
-    if (!response) throw new Error('Erreur lors de la création de l\'habitude')
+    if (!response) throw new Error("Erreur lors de la création de l'habitude");
 
     // Réinitialiser le formulaire et rafraîchir les données
-    title.value = ''
-    description.value = ''
-    await refresh()
+    title.value = '';
+    description.value = '';
+    await refresh();
   } catch (err) {
-    error.value = (err as Error).message
+    error.value = (err as Error).message;
   }
-}
+};
 
 // Fonction pour supprimer une habitude
 const deleteHabit = async (habitId: number) => {
   try {
     const response = await useTrackingApi(`/habits/${habitId}`, {
-      method: 'DELETE'
-    })
+      method: 'DELETE',
+    });
 
-    if (!response) throw new Error('Erreur lors de la suppression de l\'habitude')
+    if (!response) throw new Error("Erreur lors de la suppression de l'habitude");
 
-    await refresh()
+    await refresh();
   } catch (err) {
-    console.error('Erreur:', err)
+    console.error('Erreur:', err);
   }
-}
+};
 
 // État pour l'édition d'habitude
-const editingHabit = ref<Habit | null>(null)
+const editingHabit = ref<Habit | null>(null);
 
 // Fonction pour commencer l'édition
 const startEditHabit = (habit: Habit) => {
-  editingHabit.value = { ...habit }
-}
+  editingHabit.value = { ...habit };
+};
 
 // Fonction pour mettre à jour une habitude
 const updateHabit = async () => {
   if (!editingHabit.value) {
-    alert('Aucune habitude à mettre à jour.')
-    return
+    alert('Aucune habitude à mettre à jour.');
+    return;
   }
 
   if (!editingHabit.value.title) {
-    alert('Le titre est requis')
-    return
+    alert('Le titre est requis');
+    return;
   }
 
   try {
@@ -101,20 +90,19 @@ const updateHabit = async () => {
       method: 'PUT',
       body: {
         title: editingHabit.value.title,
-        description: String(editingHabit.value.description || ''),
-      }
-    })
+        description: String(editingHabit.value.description),
+      },
+    });
 
-    if (!response) throw new Error('Erreur lors de la mise à jour de l\'habitude')
+    if (!response) throw new Error("Erreur lors de la mise à jour de l'habitude");
 
-    editingHabit.value = null
-    await refresh()
+    editingHabit.value = null;
+    await refresh();
   } catch (err) {
-    console.error('Erreur:', err)
-    alert((err as Error).message)
+    console.error('Erreur:', err);
+    alert((err as Error).message);
   }
-}
-
+};
 
 // Fonction pour tracker une habitude
 const trackHabit = async (habitId: number, completed: boolean) => {
@@ -123,21 +111,25 @@ const trackHabit = async (habitId: number, completed: boolean) => {
       method: 'POST',
       body: {
         completed: completed.toString(),
-        date: new Date().toISOString().split('T')[0]
-      }
-    })
+        date: new Date().toISOString().split('T')[0],
+      },
+    });
 
-    if (!response) throw new Error('Erreur lors du tracking de l\'habitude')
+    if (!response) throw new Error("Erreur lors du tracking de l'habitude");
 
-    await refresh()
+    // Mettre à jour le statut localement
+    const habit = data?.value?.personalHabits.find((h) => h.id === habitId);
+    if (habit) {
+      habit.status = completed ? 'completed' : 'not_done';
+    }
+
+    await refresh();
   } catch (err) {
-    console.error('Erreur:', err)
-    alert((err as Error).message)
+    console.error('Erreur:', err);
+    alert((err as Error).message);
   }
-}
+};
 </script>
-
-
 
 <template>
   <div class="dashboard-container">
@@ -170,17 +162,6 @@ const trackHabit = async (habitId: number, completed: boolean) => {
       </form>
     </div>
 
-    <!-- Habitudes globales -->
-    <div class="habits-section">
-      <h2>Habitudes globales</h2>
-      <ul v-if="data?.globalHabits?.length">
-        <li v-for="habit in data.globalHabits" :key="habit.id">
-          {{ habit.title }} : {{ habit.description }}
-        </li>
-      </ul>
-      <p v-else>Aucune habitude globale disponible</p>
-    </div>
-
     <!-- Habitudes personnelles -->
     <div class="habits-section">
       <h2>Mes habitudes personnelles</h2>
@@ -188,7 +169,11 @@ const trackHabit = async (habitId: number, completed: boolean) => {
         <li 
           v-for="habit in data.personalHabits" 
           :key="habit.id" 
-          class="personal-habit-item"
+          :class="{ 
+            'personal-habit-item': true, 
+            'habit-completed': habit.status === 'completed', 
+            'habit-not-done': habit.status === 'not_done' 
+          }"
         >
           <template v-if="editingHabit && editingHabit.id === habit.id">
             <div class="edit-form">
@@ -257,8 +242,6 @@ const trackHabit = async (habitId: number, completed: boolean) => {
   </div>
 </template>
 
-
-
 <style scoped>
 .dashboard-container {
   max-width: 800px;
@@ -324,6 +307,14 @@ input, textarea {
   padding: 10px;
 }
 
+.habit-completed {
+  background-color: #d4edda;
+}
+
+.habit-not-done {
+  background-color: #f8d7da;
+}
+
 .habit-details {
   display: flex;
   justify-content: space-between;
@@ -358,7 +349,8 @@ input, textarea {
   color: white;
 }
 
-.delete-btn {
+.delete-btn
+ {
   background-color: #f44336;
   color: white;
 }
