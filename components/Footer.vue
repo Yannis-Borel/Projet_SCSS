@@ -1,3 +1,9 @@
+<script lang = "ts">
+export default {
+  name: 'AppFooter',
+};
+</script>
+
 <template>
     <footer class="footer">
       <div class="footer__container">
@@ -49,11 +55,6 @@
     </footer>
   </template>
   
-  <script>
-  export default {
-    name: 'Footer'
-  }
-  </script>
   
   <style lang="scss">
   .footer {
