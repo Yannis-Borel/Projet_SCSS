@@ -4,7 +4,7 @@
    
    <NuxtLayout>
    <NuxtPage/>
-
+<Footer/>
    </NuxtLayout>
    
   </div>
