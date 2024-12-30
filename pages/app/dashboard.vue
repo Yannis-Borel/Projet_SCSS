@@ -1,25 +1,39 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { DashboardPayload } from '~/@types/dashboard';
+import type { PersonalHabit, DashboardPayload } from '~/@types/dashboard';
 import useTrackingApi from '~/composables/useTrackingApi';
 
-
+// Étendre le type PersonalHabit pour inclure une propriété locale "status"
+type ExtendedPersonalHabit = PersonalHabit & {
+  status?: 'completed' | 'not_done';
+};
 
 // Récupération des données avec useAsyncData
 const { data, refresh } = await useAsyncData<DashboardPayload>('dashboard', async () => {
   const response = await useTrackingApi('/dashboard', {
     method: 'GET',
   });
-
   if (!response) throw new Error('Erreur lors du chargement du tableau de bord');
-
   return response;
 });
 
-// État pour le formulaire d'ajout d'habitude
-const title = ref('');
-const description = ref<string>(''); // Initialisation correcte
-const error = ref('');
+// Convertir les habitudes personnelles en ExtendedPersonalHabit
+const personalHabits = computed((): ExtendedPersonalHabit[] => {
+  return (
+    data.value?.personalHabits.map((habit) => ({
+      ...habit,
+      status: 'not_done', // Initialiser une valeur par défaut si non présente
+    })) || []
+  );
+});
+
+// États pour ajouter une habitude
+const title = ref<string>('');
+const description = ref<string>('');
+const error = ref<string>('');
+
+// État pour l'édition d'une habitude
+const editingHabit = ref<ExtendedPersonalHabit | null>(null);
 
 // Fonction pour ajouter une habitude
 const addHabit = async () => {
@@ -50,26 +64,8 @@ const addHabit = async () => {
   }
 };
 
-// Fonction pour supprimer une habitude
-const deleteHabit = async (habitId: number) => {
-  try {
-    const response = await useTrackingApi(`/habits/${habitId}`, {
-      method: 'DELETE',
-    });
-
-    if (!response) throw new Error("Erreur lors de la suppression de l'habitude");
-
-    await refresh();
-  } catch (err) {
-    console.error('Erreur:', err);
-  }
-};
-
-// État pour l'édition d'habitude
-const editingHabit = ref<Habit | null>(null);
-
-// Fonction pour commencer l'édition
-const startEditHabit = (habit: Habit) => {
+// Fonction pour commencer l'édition d'une habitude
+const startEditHabit = (habit: ExtendedPersonalHabit) => {
   editingHabit.value = { ...habit };
 };
 
@@ -90,17 +86,33 @@ const updateHabit = async () => {
       method: 'PUT',
       body: {
         title: editingHabit.value.title,
-        description: String(editingHabit.value.description),
+        description: editingHabit.value.description || '',
       },
     });
 
     if (!response) throw new Error("Erreur lors de la mise à jour de l'habitude");
 
+    // Réinitialiser l'état d'édition et rafraîchir les données
     editingHabit.value = null;
     await refresh();
   } catch (err) {
     console.error('Erreur:', err);
     alert((err as Error).message);
+  }
+};
+
+// Fonction pour supprimer une habitude
+const deleteHabit = async (habitId: number) => {
+  try {
+    const response = await useTrackingApi(`/habits/${habitId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response) throw new Error("Erreur lors de la suppression de l'habitude");
+
+    await refresh();
+  } catch (err) {
+    console.error('Erreur:', err);
   }
 };
 
@@ -117,8 +129,8 @@ const trackHabit = async (habitId: number, completed: boolean) => {
 
     if (!response) throw new Error("Erreur lors du tracking de l'habitude");
 
-    // Mettre à jour le statut localement
-    const habit = data?.value?.personalHabits.find((h) => h.id === habitId);
+    // Mettre à jour localement le statut
+    const habit = personalHabits.value.find((h) => h.id === habitId);
     if (habit) {
       habit.status = completed ? 'completed' : 'not_done';
     }
@@ -130,6 +142,8 @@ const trackHabit = async (habitId: number, completed: boolean) => {
   }
 };
 </script>
+
+
 
 <template>
   <div class="dashboard-container">
@@ -165,9 +179,9 @@ const trackHabit = async (habitId: number, completed: boolean) => {
     <!-- Habitudes personnelles -->
     <div class="habits-section">
       <h2>Mes habitudes personnelles</h2>
-      <ul v-if="data?.personalHabits?.length">
+      <ul v-if="personalHabits?.length">
         <li 
-          v-for="habit in data.personalHabits" 
+          v-for="habit in personalHabits" 
           :key="habit.id" 
           :class="{ 
             'personal-habit-item': true, 

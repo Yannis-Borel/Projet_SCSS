@@ -58,7 +58,7 @@ const onSubmit = async (event: Event) => {
           class="form__group-input"
           placeholder="Entrez votre username"
           required
-        />
+        >
       </div>
       <div class="form__group">
         <label for="password" class="form__group-label">Mot de passe</label>
@@ -69,7 +69,7 @@ const onSubmit = async (event: Event) => {
           class="form__group-input"
           placeholder="Entrez votre mot de passe"
           required
-        />
+        >
       </div>
       <button type="submit" class="form__button">Envoyer</button>
       <div v-if="errorMessage" class="form__error">{{ errorMessage }}</div>
