@@ -30,10 +30,10 @@ const closeMobileMenu = () => {
 
           <!-- Liens pour grands écrans -->
           <div class="nav__desktop-menu">
-            <RouterLink to="/emissions" class="nav__desktop-link">
+            <RouterLink to="/app/dashboard" class="nav__desktop-link">
               Habitudes
             </RouterLink>
-            <RouterLink to="/reportages" class="nav__desktop-link">
+            <RouterLink to="/register" class="nav__desktop-link">
               Inscription
             </RouterLink>
             <RouterLink to="/apropos" class="nav__desktop-link">
