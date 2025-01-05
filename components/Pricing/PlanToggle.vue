@@ -20,10 +20,10 @@ const togglePeriod = () => {
     <button 
       class="plan-toggle__switch"
       :class="{ 'plan-toggle__switch--yearly': period === 'yearly' }"
-      @click="togglePeriod"
       type="button"
       role="switch"
       :aria-checked="period === 'yearly'"
+      @click="togglePeriod"
     >
       <span class="plan-toggle__slider" />
     </button>

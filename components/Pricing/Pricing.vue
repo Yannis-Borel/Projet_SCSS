@@ -1,38 +1,57 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+interface PricingPlan {
+  title: string;
+  monthlyPrice: number;
+  yearlyPrice: number;
+  isPremium: boolean;
+  features: string[];
+  buttonText: string;
+}
+
+interface PricingSection {
+  title: string;
+  subtitle: string;
+  plans: PricingPlan[];
+}
+
+interface Homepage {
+  pricing: PricingSection;
+}
+
 const period = ref<'monthly' | 'yearly'>('monthly');
 
-const plans = [
-  {
-    title: 'Free',
-    monthlyPrice: 0,
-    yearlyPrice: 0,
-    features: ['1 seat', '2 project'],
-    isPremium: false
-  },
-  {
-    title: 'Premium',
-    monthlyPrice: 30,
-    yearlyPrice: 299,
-    features: ['Unlimited Seat', 'Unlimited project'],
-    isPremium: true
+const query = `*[_type == "homepage"][0] {
+  pricing {
+    title,
+    subtitle,
+    plans[] {
+      title,
+      monthlyPrice,
+      yearlyPrice,
+      isPremium,
+      features,
+      buttonText
+    }
   }
-];
+}`;
+
+const { data: homepageData } = await useSanityQuery<Homepage>(query);
 </script>
 
 <template>
-  <div class="pricing">
+  <div v-if="homepageData" class="pricing">
     <div class="pricing__header">
-      <h1 class="pricing__title">Flexible work, Simple Price</h1>
-      <p class="pricing__subtitle">Growth your business with using us</p>
+      <h1 class="pricing__title">{{ homepageData.pricing.title }}</h1>
+      <p class="pricing__subtitle">{{ homepageData.pricing.subtitle }}</p>
     </div>
     
     <PlanToggle v-model:period="period" />
     
     <div class="pricing__cards">
       <PricingCard
-        v-for="plan in plans"
+        v-for="plan in homepageData.pricing.plans"
         :key="plan.title"
         v-bind="plan"
         :period="period"
@@ -40,6 +59,7 @@ const plans = [
     </div>
   </div>
 </template>
+
 
 <style lang="scss" scoped>
 .pricing {

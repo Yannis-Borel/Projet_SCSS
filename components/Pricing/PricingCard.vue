@@ -6,6 +6,7 @@ defineProps<{
   period: 'monthly' | 'yearly';
   features: string[];
   isPremium?: boolean;
+  buttonText: string;
 }>();
 </script>
 
@@ -23,7 +24,7 @@ defineProps<{
       </li>
     </ul>
     <button class="pricing-card__button">
-      Start 14 Days Trial
+      {{ buttonText }}
     </button>
   </div>
 </template>
