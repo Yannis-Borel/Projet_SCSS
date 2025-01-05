@@ -28,3 +28,17 @@ export type DashboardPayload = {
     globalHabits: GlobalHabit[],
     personalHabits: PersonalHabit[]
 }
+
+export interface PersonalHabit {
+    id: number;
+    title: string;
+    description?: string;
+  }
+  
+  export interface DashboardPayload {
+    personalHabits: PersonalHabit[];
+  }
+  
+  export type ExtendedPersonalHabit = PersonalHabit & {
+    status?: 'completed' | 'not_done';
+  };

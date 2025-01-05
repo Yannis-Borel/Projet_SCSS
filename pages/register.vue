@@ -71,6 +71,10 @@ const onSubmit = async (event: Event) => {
           required
         >
       </div>
+      <p class="form__container-link">
+          Vous avez un compte ?
+          <NuxtLink to="/login" class="form__link">Se connecter</NuxtLink>
+        </p>
       <button type="submit" class="form__button">Envoyer</button>
       <div v-if="errorMessage" class="form__error">{{ errorMessage }}</div>
     </form>

@@ -50,7 +50,7 @@ export default {
   
       <!-- Copyright -->
       <div class="footer__bottom">
-        <p class="footer__copyright">© 2024 Votre Entreprise. Tous droits réservés.</p>
+        <p class="footer__copyright">© 2025 Votre Entreprise. Tous droits réservés.</p>
       </div>
     </footer>
   </template>
