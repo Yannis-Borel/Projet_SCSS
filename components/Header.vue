@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { RouterLink } from "vue-router";
+
 
 // État d'ouverture du menu mobile
 const isOpen = ref(false);
@@ -24,21 +24,22 @@ const closeMobileMenu = () => {
       <div class="nav__container">
         <div class="nav__content">
           <!-- Logo -->
-          <RouterLink to="/" class="nav__logo">
-            <WEBTVLogo class="nav__logo-img" alt="logo du site" />
-          </RouterLink>
+          <NuxtLink to="/" class="nav__mobile-logo">
+              <img src="@/assets/image/logo-Routinify.png" class="nav__mobile-logo-img" alt="logo du site">
+
+            </NuxtLink>
 
           <!-- Liens pour grands écrans -->
           <div class="nav__desktop-menu">
-            <RouterLink to="/app/dashboard" class="nav__desktop-link">
+            <NuxtLink to="/app/dashboard" class="nav__desktop-link">
               Habitudes
-            </RouterLink>
-            <RouterLink to="/register" class="nav__desktop-link">
+            </NuxtLink>
+            <NuxtLink to="/register" class="nav__desktop-link">
               Inscription
-            </RouterLink>
-            <RouterLink to="/apropos" class="nav__desktop-link">
+            </NuxtLink>
+            <NuxtLink to="/apropos" class="nav__desktop-link">
               À propos
-            </RouterLink>
+            </NuxtLink>
           </div>
 
           <!-- Bouton menu mobile -->
@@ -71,10 +72,8 @@ const closeMobileMenu = () => {
           :class="{ 'nav__mobile-menu--hidden': !isOpen }"
         >
           <div class="nav__mobile-header">
-            <!-- Logo -->
-            <RouterLink to="/" class="nav__mobile-logo">
-              <img src="" class="nav__mobile-logo-img" alt="logo du site" >
-            </RouterLink>
+        
+           
             <!-- Bouton fermeture -->
             <button class="nav__mobile-close" @click="closeMobileMenu">
               <svg viewBox="0 0 20 20" fill="white" class="nav__mobile-close-icon">
@@ -90,49 +89,49 @@ const closeMobileMenu = () => {
           <!-- Liens menu mobile -->
           <ul class="nav__mobile-links">
             <li class="nav__mobile-item">
-              <RouterLink
+              <NuxtLink
                 to="/emissions"
                 class="nav__mobile-link"
                 @click="closeMobileMenu"
               >
                 Emissions
-              </RouterLink>
+              </NuxtLink>
             </li>
             <li class="nav__mobile-item">
-              <RouterLink
+              <NuxtLink
                 to="/reportages"
                 class="nav__mobile-link"
                 @click="closeMobileMenu"
               >
                 Reportages
-              </RouterLink>
+              </NuxtLink>
             </li>
             <li class="nav__mobile-item">
-              <RouterLink
+              <NuxtLink
                 to="/rediffusions"
                 class="nav__mobile-link"
                 @click="closeMobileMenu"
               >
                 Rediffusions
-              </RouterLink>
+              </NuxtLink>
             </li>
             <li class="nav__mobile-item">
-              <RouterLink
+              <NuxtLink
                 to="/apropos"
                 class="nav__mobile-link"
                 @click="closeMobileMenu"
               >
                 À propos
-              </RouterLink>
+              </NuxtLink>
             </li>
             <li class="nav__mobile-item">
-              <RouterLink
+              <NuxtLink
                 to="/newsroom"
                 class="nav__mobile-link"
                 @click="closeMobileMenu"
               >
                 Newsroom
-              </RouterLink>
+              </NuxtLink>
             </li>
           </ul>
         </div>
@@ -143,12 +142,7 @@ const closeMobileMenu = () => {
 
 <style lang="scss" scoped>
 // Variables globales
-$color-black: rgb(0, 0, 0);
-$color-white: white;
-$color-gray-200: #e5e7eb;
-$color-gray-300: #d1d5db;
-$color-gray-900: #111827;
-$z-index-header: 50;
+
 
 // Mixins pour la réactivité
 @mixin desktop {
