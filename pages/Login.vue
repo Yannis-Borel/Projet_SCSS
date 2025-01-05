@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LoginForm from '@/components/Form.vue'; // Chemin vers ton composant de formulaire
+import LoginForm from '~/components/Form/Form.vue'; // Chemin vers ton composant de formulaire
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
