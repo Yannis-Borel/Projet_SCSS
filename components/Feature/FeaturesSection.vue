@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { Homepage } from '@/@types/Features';
@@ -7,10 +6,9 @@ interface Props {
   features: Homepage['features'];
 }
 
-const props = defineProps<Props>();
+defineProps<Props>(); // Pas besoin d'assigner à une variable
 const activeIndex = ref(-1);
 </script>
-
 
 <template>
   <section class="features">
