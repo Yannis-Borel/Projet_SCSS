@@ -13,6 +13,7 @@ const { data: homepage } = await useSanityQuery<SanityDocument>(
       <BeginHome v-bind="homepage.hero" />
     </div>
     <div>dzldz</div>
+    <Pricing />
   </div>
 </template>
 

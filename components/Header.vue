@@ -37,6 +37,8 @@ const closeMobileMenu = () => {
             <NuxtLink to="/register" class="nav__desktop-link">
               Inscription
             </NuxtLink>
+            <NuxtLink to="/blog" class="nav__desktop-link">
+             blog             </NuxtLink>
             <NuxtLink to="/apropos" class="nav__desktop-link">
               À propos
             </NuxtLink>
