@@ -75,72 +75,110 @@ function handleSubmit(event: Event) {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  background-color: #f9f9f9; // Contexte léger et moderne
+
+  &--dark {
+    background-color: #333;
+    color: #fff;
+  }
 }
 
 .form {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #fff;
   padding: 2rem;
   border-radius: 8px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.form__title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #333;
-}
-
-.form__group {
-  margin-bottom: 1.5rem;
-}
-
-.form__label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-.form__input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.form__actions {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-}
+  gap: 1.5rem;
 
-.form__register-link {
-  font-size: 0.875rem;
-  text-align: center;
-}
+  &--primary {
+    border: 2px solid #007bff;
+  }
 
-.form__link {
-  color: #007bff;
-  text-decoration: none;
+  &__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+  }
 
-  &:hover {
-    text-decoration: underline;
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+    }
+
+    &--error {
+      border-color: red;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  &__error-message {
+    color: red;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+
+  &__register-link {
+    font-size: 0.875rem;
+    color: #666;
+    text-align: center;
+
+    .form__link {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
-.form__error-message {
-  color: red;
-  font-size: 0.875rem;
-  text-align: center;
-}
-
+// Media Queries pour le responsive design
 @media screen and (max-width: 768px) {
   .form {
     padding: 1.5rem;
+
+    &__input {
+      font-size: 0.95rem;
+    }
+
+    &__title {
+      font-size: 1.3rem;
+    }
   }
 }
 
@@ -148,10 +186,19 @@ function handleSubmit(event: Event) {
   .form {
     padding: 1rem;
     width: 90%;
-  }
 
-  .form__input {
-    padding: 0.5rem;
+    &__input {
+      padding: 0.5rem;
+    }
+
+    &__title {
+      font-size: 1.2rem;
+    }
+
+    &__register-link {
+      font-size: 0.8rem;
+    }
   }
 }
+
 </style>
